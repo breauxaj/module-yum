@@ -23,19 +23,6 @@ yum::gpgkey { 'somerepo':
 }
 ```
 
-Hiera
------
-```
-repos:
-  ius:
-   mirrorlist:     'https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http'
-   failovermethod: 'priority'
-   enabled:        '1'
-   gpgcheck:       '1'
-   gpgkey:         'file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY'
-   descr:          'IUS Community Packages for Enterprise Linux 7 - $basearch'
-```
-
 License
 -------
 GPL3

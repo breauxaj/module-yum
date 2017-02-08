@@ -19,24 +19,28 @@
 #    class { 'yum': }
 #
 class yum (
-  $config = {},
-  $gpgkeys = {},
-  $repos = {}
+  $ensure = $::yum::params::yum_package_ensure
 ) inherits ::yum::params {
   case $::osfamily {
     'RedHat': {
-      if $config {
-        create_resources('yum::config',$config)
+      package { $::yum::params::yum_packages:
+        ensure  => $ensure,
       }
 
-      if $gpgkeys {
-        create_resources('yum::gpgkey',$gpgkeys)
-      }
+      $config = hiera_hash('yum::config',{})
+      create_resources('yum::config',$config)
 
-      if $repos {
-        create_resources('yumrepo',$repos)
-      }
+      $gpgkeys = hiera_hash('yum::gpgkeys',{})
+      create_resources('yum::gpgkey',$gpgkeys)
 
+      $repos = hiera_hash('yum::repos',{})
+      create_resources('yumrepo',$repos)
+
+      service { $::yum::params::yum_service:
+        ensure  => running,
+        enable  => true,
+        require => Package[$::yum::params::yum_packages],
+      }
     }
     default: {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")

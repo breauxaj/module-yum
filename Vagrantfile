@@ -3,6 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/home/vagrant/yum", type: "rsync", rsync__exclude: ".git/"
+  config.ssh.insert_key = false
 
   config.vm.define "centos" do |centos|
     centos.vm.box     = 'breauxaj/centos7'

@@ -15,6 +15,7 @@ class yum::params {
         'yum-cron',
         'yum-utils'
       ]
+
       $yum_service = 'yum-cron'
     }
     default: {

@@ -1,6 +1,13 @@
 node default {
   include ::yum
 
+  case $::operatingsystem {
+    'Amazon': {
+        Package { allow_virtual => false }
+    }
+    default: {}
+  }
+
   case $::osfamily {
     'RedHat': {
       yum::config { 'exclude':

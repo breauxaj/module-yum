@@ -10,13 +10,17 @@ class yum::params {
 
   case $::osfamily {
     'RedHat': {
-      $yum_packages = [
-        'yum',
-        'yum-cron',
-        'yum-utils'
-      ]
-
-      $yum_service = 'yum-cron'
+      case $::operatingsystemmajrelease {
+        default: {
+          $yum_packages = [
+            'yum',
+            'yum-cron',
+            'yum-utils'
+          ]
+    
+          $yum_service = 'yum-cron'
+        }
+      }
     }
     default: {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")

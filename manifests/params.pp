@@ -14,13 +14,13 @@ class yum::params {
         default: {
           case $::operatingsystemmajrelease {
             default: {
+              $yum_context  = '/files/etc/yum.conf/main'
               $yum_packages = [
                 'yum',
                 'yum-cron',
                 'yum-utils'
               ]
-
-              $yum_service = 'yum-cron'
+              $yum_service  = 'yum-cron'
             }
           }
         }
@@ -30,5 +30,4 @@ class yum::params {
       fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
     }
   }
-
 }

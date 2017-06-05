@@ -5,10 +5,8 @@ define yum::config (
 
   $key = $title
 
-  $context = '/files/etc/yum.conf/main'
-
   augeas { "yum_conf/${key}":
-    context => $context,
+    context => $::yum::params::yum_context,
     onlyif  => "get ${key} != '${value}'",
     changes => "set ${key} '${value}'",
   }

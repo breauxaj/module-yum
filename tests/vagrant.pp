@@ -1,17 +1,11 @@
 node default {
   include ::yum
 
-  case $::operatingsystem {
-    'Amazon': {
-        Package { allow_virtual => false }
-    }
-    default: {}
-  }
-
   case $::osfamily {
     'RedHat': {
-      yum::config { 'exclude':
-        value => 'kernel*'
+      yum::config {
+        'exclude': value => [ 'kernel*', 'augeas' ];
+        'installonly_limit': value => '3';
       }
 
       yum::gpgkey { 'ius':

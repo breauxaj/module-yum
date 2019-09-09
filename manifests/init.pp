@@ -33,6 +33,9 @@ class yum (
       $gpgkeys = hiera_hash('yum::gpgkeys',{})
       create_resources('yum::gpgkey',$gpgkeys)
 
+      $packages = hiera_hash('yum::packages',{})
+      create_resources('yum::packages',$packages)
+
       $repos = hiera_hash('yum::repos',{})
       create_resources('yumrepo',$repos)
 
